@@ -1,3 +1,4 @@
+// src/components/HealthRecordEditor.tsx
 import React from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Entity, Segment } from '../types/core';
@@ -18,21 +19,30 @@ export default function HealthRecordEditor() {
   };
 
   return (
-    <div style={wrap}>
-      <div style={row}>
-        <h2 style={{margin:0}}>Health Record</h2>
-        <div style={{display:'flex', gap:8}}>
-          <button onClick={appendFromEntities}>Append from Entities</button>
-        </div>
-      </div>
-      <textarea
-        value={healthRecord}
-        onChange={(e) => setHealthRecord(e.target.value)}
-        rows={8}
-        style={ta}
-        placeholder="Write or paste notes here..."
-      />
-    </div>
+    <article aria-labelledby="record-heading" className="contrast">
+      <header className="grid" style={{ gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
+        <h3 id="record-heading" style={{ margin: 0 }}>Health Record</h3>
+        <nav aria-label="Record actions">
+          <div role="group">
+            <button onClick={appendFromEntities}>Append from Entities</button>
+          </div>
+        </nav>
+      </header>
+
+      <section>
+        <textarea
+          value={healthRecord}
+          onChange={(e) => setHealthRecord(e.target.value)}
+          rows={8}
+          placeholder="Write or paste notes here..."
+          style={{
+            width: '100%',
+            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+            resize: 'vertical',
+          }}
+        />
+      </section>
+    </article>
   );
 }
 
@@ -60,10 +70,3 @@ function buildLines(ents: Entity[], segs: Segment[]) {
   }
   return out;
 }
-
-const wrap: React.CSSProperties = { marginTop: 12, display: 'grid', gap: 8 };
-const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between' };
-const ta: React.CSSProperties = {
-  width: '100%', background:'#111', color:'#eee', border:'1px solid #333',
-  borderRadius:6, padding:10, fontFamily:'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', resize:'vertical'
-};

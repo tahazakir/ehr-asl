@@ -1,0 +1,162 @@
+{
+  "healthRecord": "• [00:20] cough\n• [00:21] cough\n• [00:38] severe\n• [00:53] allergy\n• [01:06] two days",
+  "segments": [
+    {
+      "id": "asr_1757788989386_40dcd32b-4124-46a7-ad6f-d9a742b29fa3",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 1988,
+      "tEnd": 8428,
+      "text": "hello how are you feeling today",
+      "confidence": 0.9721954464912415
+    },
+    {
+      "id": "asl_1757789001373_f197a60c-6d23-49c0-a85f-b8f73224e17d",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 20416,
+      "tEnd": 20416,
+      "text": "cough",
+      "glosses": [
+        "cough"
+      ],
+      "confidence": 0.9702451825141907,
+      "provenance": {
+        "gesture": "Closed_Fist",
+        "score": 0.9702451825141907
+      }
+    },
+    {
+      "id": "asl_1757789002904_0ebc3fd6-2193-4260-8e4c-72743889612e",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 21946,
+      "tEnd": 21946,
+      "text": "cough",
+      "glosses": [
+        "cough"
+      ],
+      "confidence": 0.7988409996032715,
+      "provenance": {
+        "gesture": "Closed_Fist",
+        "score": 0.7988409996032715
+      }
+    },
+    {
+      "id": "asr_1757789014885_36f69326-288a-497d-ad89-ade95f286545",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 27198,
+      "tEnd": 33928,
+      "text": "how would you rate the cough",
+      "confidence": 0.908912181854248
+    },
+    {
+      "id": "asl_1757789019050_fc75aa60-92a2-48e3-9f83-e9af178ec475",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 38093,
+      "tEnd": 38093,
+      "text": "severe",
+      "glosses": [
+        "severe",
+        "cough"
+      ],
+      "confidence": 0.8377068042755127,
+      "provenance": {
+        "gesture": "Thumb_Down",
+        "score": 0.8377068042755127
+      }
+    },
+    {
+      "id": "asr_1757789029541_45d4f6a9-4fdd-4b86-80f1-e02d15a04fc9",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 42507,
+      "tEnd": 48584,
+      "text": "do you know the trigger",
+      "confidence": 0.9387539625167847
+    },
+    {
+      "id": "asl_1757789034599_1bb8d9db-d43c-4107-8081-b7e05147b91a",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 53642,
+      "tEnd": 53642,
+      "text": "allergy",
+      "glosses": [
+        "allergy",
+        "cough"
+      ],
+      "confidence": 0.7167719006538391,
+      "provenance": {
+        "gesture": "Pointing_Up",
+        "score": 0.7167719006538391
+      }
+    },
+    {
+      "id": "asr_1757789044723_f55c6885-5b2a-4924-baed-dcf18c8ddcbc",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 59062,
+      "tEnd": 63766,
+      "text": "how long has this been going on",
+      "confidence": 0.9721955060958862
+    },
+    {
+      "id": "asl_1757789047067_8730644c-6e4a-451f-a8c9-9cc98dde187a",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 66110,
+      "tEnd": 66110,
+      "text": "two days",
+      "glosses": [
+        "two",
+        "days"
+      ],
+      "confidence": 0.9130174517631531,
+      "provenance": {
+        "gesture": "Victory",
+        "score": 0.9130174517631531
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent_1757789001373_650b304b-1e30-4125-b8fe-36bb8277466d",
+      "type": "symptom",
+      "text": "cough",
+      "sourceSegmentId": "asl_1757789001373_f197a60c-6d23-49c0-a85f-b8f73224e17d"
+    },
+    {
+      "id": "ent_1757789002904_4ec786b1-3412-429b-bbbb-337e625074e7",
+      "type": "symptom",
+      "text": "cough",
+      "sourceSegmentId": "asl_1757789002904_0ebc3fd6-2193-4260-8e4c-72743889612e"
+    },
+    {
+      "id": "ent_1757789019050_00683e31-6658-474f-86c8-c0bf66671ae0",
+      "type": "severity",
+      "text": "severe",
+      "sourceSegmentId": "asl_1757789019050_fc75aa60-92a2-48e3-9f83-e9af178ec475"
+    },
+    {
+      "id": "ent_1757789034599_5bb183b8-073a-4052-81d3-a04cd402f174",
+      "type": "symptom",
+      "text": "allergy",
+      "sourceSegmentId": "asl_1757789034599_1bb8d9db-d43c-4107-8081-b7e05147b91a"
+    },
+    {
+      "id": "ent_1757789047068_b82cfad5-0fa0-4dc8-963d-e715ec203220",
+      "type": "duration",
+      "text": "two days",
+      "sourceSegmentId": "asl_1757789047067_8730644c-6e4a-451f-a8c9-9cc98dde187a"
+    }
+  ],
+  "visitStartedAt": 1757788980957,
+  "generatedAt": "2025-09-13T18:44:28.455Z",
+  "app": {
+    "name": "ehr-asl",
+    "version": "0.2.0-simple"
+  }
+}

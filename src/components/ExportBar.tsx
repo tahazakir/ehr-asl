@@ -27,14 +27,16 @@ export default function ExportBar() {
   };
 
   return (
-    <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
-      <button onClick={downloadJson}>Download JSON</button>
-      <span style={{fontSize:12, opacity:0.7}}>Exports healthRecord + segments + entities</span>
-    </div>
+    <nav aria-label="Export" className="grid" style={{ alignItems: 'center', gridTemplateColumns: 'auto 1fr', gap: '0.5rem' }}>
+      <div role="group">
+        <button onClick={downloadJson}>Download JSON</button>
+      </div>
+      <small className="secondary">Exports health record, segments, and entities</small>
+    </nav>
   );
 }
 
 function tsFileSafe(d: Date) {
-  const pad = (n: number, w=2) => String(n).padStart(w,'0');
-  return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  const pad = (n: number, w = 2) => String(n).padStart(w, '0');
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }

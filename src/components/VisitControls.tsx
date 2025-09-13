@@ -19,33 +19,38 @@ export default function VisitControls() {
   };
 
   return (
-    <div style={wrap}>
-      <div style={banner}>
-        Interpreter still required • Demo only
-      </div>
+    <section aria-labelledby="visit-controls-heading">
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span>Status:&nbsp;<strong>{visit.status}</strong></span>
-        <button onClick={handleStart} disabled={visit.status === 'recording'}>Start</button>
-        <button onClick={stopVisit} disabled={visit.status !== 'recording'}>Stop</button>
-        <button onClick={resetVisit}>Reset</button>
-      </div>
+      {/* Banner / Notice */}
+      <aside className="contrast" role="note">
+        Interpreter still required • Demo only
+      </aside>
+
+      {/* Status + Buttons */}
+      <nav aria-label="Visit controls" className="grid">
+        <div>
+          <small>Status:&nbsp;</small>
+          <strong>{visit.status}</strong>
+        </div>
+
+        <div role="group">
+          <button onClick={handleStart} disabled={visit.status === 'recording'}>
+            Start
+          </button>
+          <button className="secondary" onClick={stopVisit} disabled={visit.status !== 'recording'}>
+            Stop
+          </button>
+          <button className="outline" onClick={resetVisit}>
+            Reset
+          </button>
+        </div>
+      </nav>
 
       <ConsentModal
         open={showConsent}
         onAccept={acceptConsent}
         onCancel={() => setShowConsent(false)}
       />
-    </div>
+    </section>
   );
 }
-
-const wrap: React.CSSProperties = { marginBottom: 12, display: 'grid', gap: 8 };
-const banner: React.CSSProperties = {
-  padding: 8,
-  background: '#222',
-  color: '#fff',
-  borderLeft: '4px solid #f5c518',
-  borderRadius: 4,
-  fontSize: 14,
-};

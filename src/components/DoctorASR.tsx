@@ -25,7 +25,8 @@ export default function DoctorASR() {
     return Math.max(0, absMs - started);
   };
 
-  const Recognition = (window.SpeechRecognition || window.webkitSpeechRecognition) as any;
+  // Web Speech API (Chrome)
+  const Recognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
   const startASR = () => {
     if (!Recognition) {
@@ -41,8 +42,8 @@ export default function DoctorASR() {
     const rec = new Recognition();
     recRef.current = rec;
     rec.lang = 'en-US';
-    rec.continuous = true;       // keep listening across pauses
-    rec.interimResults = true;   // show interim while speaking
+    rec.continuous = true;
+    rec.interimResults = true;
     rec.maxAlternatives = 1;
 
     const beginChunk = () => {
@@ -64,7 +65,7 @@ export default function DoctorASR() {
         if (res.isFinal) {
           chunkTextRef.current += (chunkTextRef.current ? ' ' : '') + alt.transcript.trim();
           if (typeof alt.confidence === 'number') chunkConfsRef.current.push(alt.confidence);
-          setInterim(''); // clear interim when a final comes in
+          setInterim('');
           setLastFinal(chunkTextRef.current);
         } else {
           interimStr += alt.transcript;
@@ -75,20 +76,18 @@ export default function DoctorASR() {
 
     rec.onerror = (e: any) => {
       console.warn('ASR error', e);
-      // Network/no-speech errors are common; try to keep loop alive
       if (status !== 'error') setStatus('idle');
     };
 
     rec.onend = () => {
-      // If we captured any final text during this chunk, emit a Segment
+      // Emit a Segment if we captured any final text
       const text = chunkTextRef.current.trim();
       if (text) {
         const nowAbs = Date.now();
         const tStart = rel(chunkStartAbsRef.current);
         const tEnd = rel(nowAbs);
         const confs = chunkConfsRef.current;
-        const confidence =
-          confs.length ? confs.reduce((a, b) => a + b, 0) / confs.length : 0.85;
+        const confidence = confs.length ? confs.reduce((a, b) => a + b, 0) / confs.length : 0.85;
 
         const seg: Segment = {
           id: uid('asr'),
@@ -102,12 +101,11 @@ export default function DoctorASR() {
         addSegment(seg);
       }
 
-      // Keep the recognition loop running while visit is recording and we’re “listening”
+      // Keep listening while visit is recording
       if (status === 'listening' && visit.status === 'recording') {
         try {
           rec.start();
         } catch {
-          // starting too quickly can throw; small backoff
           setTimeout(() => {
             try { rec.start(); } catch {}
           }, 150);
@@ -143,33 +141,49 @@ export default function DoctorASR() {
   }, [visit.status]);
 
   return (
-    <div style={wrap}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <strong>Doctor ASR</strong>
-        <StatusBadge status={status} />
-        {status !== 'listening' ? (
-          <button onClick={startASR} disabled={visit.status !== 'recording'}>
-            Enable Mic
-          </button>
-        ) : (
-          <button onClick={stopASR}>Stop Mic</button>
-        )}
-      </div>
-      <div style={mini}>
-        <div><span style={label}>Interim:</span> {interim || <i>…</i>}</div>
-        <div><span style={label}>Last final:</span> {lastFinal || <i>—</i>}</div>
-      </div>
-    </div>
+    <article aria-labelledby="asr-heading" className="contrast">
+      <header>
+        <h3 id="asr-heading">Doctor ASR</h3>
+        <p className="secondary">
+          Status: <StatusBadge status={status} />
+        </p>
+      </header>
+
+      <nav aria-label="ASR controls" className="grid">
+        <div role="group">
+          {status !== 'listening' ? (
+            <button onClick={startASR} disabled={visit.status !== 'recording'}>
+              Enable Mic
+            </button>
+          ) : (
+            <button className="secondary" onClick={stopASR}>
+              Stop Mic
+            </button>
+          )}
+        </div>
+      </nav>
+
+      <section className="grid" style={{ gap: '0.25rem' }}>
+        <div>
+          <small className="secondary">Interim:</small>{' '}
+          {interim || <i>…</i>}
+        </div>
+        <div>
+          <small className="secondary">Last final:</small>{' '}
+          {lastFinal || <i>—</i>}
+        </div>
+      </section>
+    </article>
   );
 }
 
 /* --------- helpers --------- */
 
 function uid(prefix = 'id') {
-  // favor stable-ish IDs without collisions for demo
-  const rnd = (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
-    ? (crypto as any).randomUUID()
-    : Math.random().toString(36).slice(2);
+  const rnd =
+    (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
+      ? (crypto as any).randomUUID()
+      : Math.random().toString(36).slice(2);
   return `${prefix}_${Date.now()}_${rnd}`;
 }
 
@@ -178,30 +192,16 @@ function StatusBadge({ status }: { status: RecStatus }) {
     status === 'listening' ? '#2ecc71' :
     status === 'error' ? '#e74c3c' : '#7f8c8d';
   return (
-    <span style={{
-      fontSize: 12,
-      padding: '2px 6px',
-      borderRadius: 10,
-      border: `1px solid ${color}`,
-      color,
-    }}>
+    <span
+      style={{
+        fontSize: 12,
+        padding: '2px 6px',
+        borderRadius: 10,
+        border: `1px solid ${color}`,
+        color,
+      }}
+    >
       {status}
     </span>
   );
 }
-
-/* --------- styles --------- */
-const wrap: React.CSSProperties = {
-  marginTop: 8,
-  padding: 8,
-  border: '1px dashed #333',
-  borderRadius: 8,
-  background: '#0f0f0f',
-};
-const mini: React.CSSProperties = {
-  marginTop: 6,
-  fontSize: 13,
-  display: 'grid',
-  gap: 4,
-};
-const label: React.CSSProperties = { opacity: 0.7 };
