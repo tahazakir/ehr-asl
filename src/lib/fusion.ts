@@ -12,10 +12,7 @@ export function sortByStart(list: Segment[]): Segment[] {
  *
  * Use this for DISPLAY ONLY. Keep raw segments in state for IDs/entities.
  */
-export function coalesceSegments(
-  list: Segment[],
-  windowMs = 300
-): Segment[] {
+export function coalesceSegments(list: Segment[], windowMs = 300): Segment[] {
   const sorted = sortByStart(list);
   if (sorted.length <= 1) return sorted;
 
@@ -29,21 +26,26 @@ export function coalesceSegments(
       seg.modality === cur.modality &&
       seg.tStart - cur.tEnd <= windowMs
     ) {
-      // merge into cur
+      // merge into cur — build object explicitly (no spread of union types)
       const mergedText = concatText(cur.text, seg.text);
       const mergedGlosses = concatGlosses(cur.glosses, seg.glosses);
 
-      cur = {
-        ...cur,
+      const updated: Segment = {
+        id: cur.id, // keep current ID for display stability
+        speaker: cur.speaker,
+        modality: cur.modality,
+        tStart: cur.tStart,
         tEnd: Math.max(cur.tEnd, seg.tEnd),
         text: mergedText ?? undefined,
         glosses: mergedGlosses.length ? mergedGlosses : undefined,
         confidence: Math.min(cur.confidence, seg.confidence),
+        provenance: cur.provenance,
       };
-      // keep cur.id (stable for display); entities still reference raw IDs
+
+      cur = updated;
       out[out.length - 1] = cur;
     } else {
-      cur = { ...seg };
+      cur = cloneSeg(seg);
       out.push(cur);
     }
   }
@@ -80,10 +82,7 @@ export function labelTurns(
     const s = segments[i];
     const prev = cur[cur.length - 1];
 
-    if (
-      !prev ||
-      s.speaker === prev.speaker && s.tStart - prev.tEnd <= gapMs
-    ) {
+    if (!prev || (s.speaker === prev.speaker && s.tStart - prev.tEnd <= gapMs)) {
       cur.push(s);
     } else {
       flush();
@@ -95,15 +94,36 @@ export function labelTurns(
 }
 
 /* ----------------- helpers ----------------- */
+
+function cloneSeg(s: Segment): Segment {
+  return {
+    id: s.id,
+    speaker: s.speaker,
+    modality: s.modality,
+    tStart: s.tStart,
+    tEnd: s.tEnd,
+    text: s.text !== undefined ? s.text : undefined,
+    glosses: Array.isArray(s.glosses) ? s.glosses.slice() : undefined,
+    confidence: s.confidence,
+    provenance: s.provenance,
+  };
+}
+
 function concatText(a?: string, b?: string): string | null {
-  if (a && b) return `${a} ${needsSpace(a, b) ? '' : ''}${b}`.trim();
+  if (a && b) {
+    const join = needsSpace(a, b) ? ' ' : '';
+    return `${a}${join}${b}`.trim();
+  }
   return a ?? b ?? null;
 }
 function needsSpace(a: string, b: string) {
   // naive join; keep it simple for demo
   return !(a.endsWith(' ') || b.startsWith(' '));
 }
+
 function concatGlosses(a?: string[], b?: string[]): string[] {
-  return [...(a ?? []), ...(b ?? [])];
+  const out: string[] = [];
+  if (Array.isArray(a)) out.push(...a);
+  if (Array.isArray(b)) out.push(...b);
+  return out;
 }
-    
