@@ -47,7 +47,7 @@ export default function GestureASL() {
 
   const GESTURE_TO_PHRASE: Record<string, { text: string; glosses: string[]; entityType: Entity['type'] }> = {
     Thumb_Down:  { text: 'severe',   glosses: ['severe', 'cough'], entityType: 'severity' },
-    Thumb_Up:    { text: 'severe',   glosses: ['severe', 'cough'], entityType: 'symptom'  },
+    Thumb_Up:    { text: 'mild',   glosses: ['mild', 'cough'], entityType: 'severity'  },
     Closed_Fist: { text: 'cough',    glosses: ['cough'],           entityType: 'symptom'  },
     Victory:     { text: 'two days', glosses: ['two', 'days'],     entityType: 'duration' },
     Pointing_Up: { text: 'allergy',  glosses: ['allergy','cough'], entityType: 'symptom'  },
