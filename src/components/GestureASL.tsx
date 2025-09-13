@@ -19,13 +19,15 @@ export default function GestureASL() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'running' | 'error'>('idle');
   const [lastGesture, setLastGesture] = useState<string>('—');
 
-  // Map recognized gesture -> phrase AND entity type
-  const GESTURE_TO_PHRASE: Record<string, { text: string; glosses: string[]; entityType: Entity['type'] }> = {
-    Thumb_Up:   { text: 'chest pain', glosses: ['chest', 'pain'], entityType: 'symptom' },
-    Thumb_Down: { text: 'chest pain', glosses: ['chest', 'pain'], entityType: 'symptom' },
-    // Add more only if they’re reliable on your machine
-    // Pointing_Up: { text: 'two days', glosses: ['two','days'], entityType: 'duration' },
-  };
+    const GESTURE_TO_PHRASE: Record<string, { text: string; glosses: string[]; entityType: Entity['type'] }> = {
+    Thumb_Down: { text: 'chest pain', glosses: ['chest','pain'], entityType: 'symptom' },
+    Thumb_Up:   { text: 'chest pain', glosses: ['chest','pain'], entityType: 'symptom' },
+    Closed_Fist:{ text: 'severe', glosses: ['severe'], entityType: 'severity' },
+    Victory:    { text: 'two days', glosses: ['two','days'], entityType: 'duration' },
+    Pointing_Up:{ text: 'one day',  glosses: ['one','day'],  entityType: 'duration' },
+    // Open_Palm: { text: 'no fever', glosses: ['no','fever'], entityType: 'symptom' }, // enable only if stable for you
+    };
+
 
   // Tunables for stability
   const SCORE_MIN = 0.70;
