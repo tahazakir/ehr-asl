@@ -39,32 +39,10 @@ npm run dev
 
 Open http://localhost:5173 and allow **camera** + **microphone**.
 
-**(Optional) demo history** in DevTools:
-~~~js
-localStorage.setItem('patient_history_json', JSON.stringify({
-  recent_history: { weight_loss: true }
-}));
-~~~
-
----
-
-## Follow-up API (proxy)
-
-Point the SPA to your Vercel Function URL (e.g. `https://<project>.vercel.app/api/followup`).
-
-- Hardcode in `src/lib/llm.ts`, **or**
-- Use a build-time env var: `VITE_FOLLOWUP_URL`.
-
----
-
 ## How to use
 1. Click **Start** (visit controls).
 2. **Doctor ASR** → **Enable Mic**.
 3. **Gestures** → **Start Gesture Capture**.  
-   - `Closed_Fist` → “cough”  
-   - `Thumb_Up/Thumb_Down` → severity cues (demo)  
-   - `Victory / Pointing_Up` → simple durations (demo)  
-   - **Allergy**: hold index fingertip toward the nose ~0.3s
 4. When a **symptom** is emitted, a **follow-up question** appears.
 5. Use **Health Record**; optionally **Append from Entities**.
 6. **Download JSON** at the bottom.
