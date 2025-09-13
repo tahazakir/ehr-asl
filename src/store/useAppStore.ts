@@ -18,7 +18,7 @@ type AppState = {
   appendHealthRecord: (text: string) => void;
 };
 
-export const useAppStore = create<AppState>((set, get) => ({
+export const useAppStore = create<AppState>((set) => ({
   visit: { status: 'idle' },
   segments: [],
   entities: [],

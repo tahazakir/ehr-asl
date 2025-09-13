@@ -1,5 +1,5 @@
 // src/components/DoctorASR.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Segment } from '../types/core';
 

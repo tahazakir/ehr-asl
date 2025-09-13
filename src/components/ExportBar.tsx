@@ -1,5 +1,4 @@
 // src/components/ExportBar.tsx
-import React from 'react';
 import { useAppStore } from '../store/useAppStore';
 
 export default function ExportBar() {

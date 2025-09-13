@@ -1,5 +1,4 @@
 // src/components/HealthRecordEditor.tsx
-import React from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Entity, Segment } from '../types/core';
 

@@ -1,5 +1,5 @@
 // src/components/GestureASL.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Segment, Entity } from '../types/core';
 import { requestFollowup, loadPatientHistory, type Followup } from '../lib/llm';
