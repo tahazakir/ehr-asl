@@ -1,0 +1,129 @@
+{
+  "note": {
+    "sections": {
+      "HPI": "• [00:00] chest pain\n• [00:01] left side\n• [00:02] two days\n• [00:04] worse with exertion",
+      "ROS": "",
+      "PE": "",
+      "Plan": ""
+    },
+    "sources": [
+      {
+        "segmentId": "p1",
+        "entityId": "e1"
+      },
+      {
+        "segmentId": "p2",
+        "entityId": "e2"
+      },
+      {
+        "segmentId": "p3",
+        "entityId": "e3"
+      },
+      {
+        "segmentId": "p4",
+        "entityId": "e4"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "id": "p1",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 0,
+      "tEnd": 1200,
+      "glosses": [
+        "chest",
+        "pain"
+      ],
+      "confidence": 0.92
+    },
+    {
+      "id": "p2",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 1300,
+      "tEnd": 2600,
+      "glosses": [
+        "left",
+        "side"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "id": "c1",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 1500,
+      "tEnd": 3000,
+      "text": "Where exactly?",
+      "confidence": 0.88
+    },
+    {
+      "id": "p3",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 2600,
+      "tEnd": 4200,
+      "glosses": [
+        "two",
+        "days"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "id": "c2",
+      "speaker": "clinician",
+      "modality": "ASR",
+      "tStart": 3100,
+      "tEnd": 5200,
+      "text": "How long has it been?",
+      "confidence": 0.86
+    },
+    {
+      "id": "p4",
+      "speaker": "patient",
+      "modality": "ASL",
+      "tStart": 4300,
+      "tEnd": 6200,
+      "glosses": [
+        "worse",
+        "with",
+        "exertion"
+      ],
+      "confidence": 0.88
+    }
+  ],
+  "entities": [
+    {
+      "id": "e1",
+      "type": "symptom",
+      "text": "chest pain",
+      "sourceSegmentId": "p1"
+    },
+    {
+      "id": "e2",
+      "type": "body_site",
+      "text": "left side",
+      "sourceSegmentId": "p2"
+    },
+    {
+      "id": "e3",
+      "type": "duration",
+      "text": "two days",
+      "sourceSegmentId": "p3"
+    },
+    {
+      "id": "e4",
+      "type": "severity",
+      "text": "worse with exertion",
+      "sourceSegmentId": "p4"
+    }
+  ],
+  "visitStartedAt": null,
+  "generatedAt": "2025-09-13T02:44:07.628Z",
+  "app": {
+    "name": "ehr-asl",
+    "version": "0.1.0"
+  }
+}

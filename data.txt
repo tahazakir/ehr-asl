@@ -1,0 +1,20 @@
+// Patient ASL (left)
+ADD_SEGMENT({id:'p1',speaker:'patient',modality:'ASL',tStart:0,tEnd:1200,glosses:['chest','pain'],confidence:0.92});
+ADD_SEGMENT({id:'p2',speaker:'patient',modality:'ASL',tStart:1300,tEnd:2600,glosses:['left','side'],confidence:0.9});
+
+// Clinician ASR (right)
+ADD_SEGMENT({id:'c1',speaker:'clinician',modality:'ASR',tStart:1500,tEnd:3000,text:'Where exactly?',confidence:0.88});
+ADD_SEGMENT({id:'c2',speaker:'clinician',modality:'ASR',tStart:3100,tEnd:5200,text:'How long has it been?',confidence:0.86});
+
+// (You already added some segments; add a few more and entities)
+ADD_SEGMENT({id:'p3',speaker:'patient',modality:'ASL',tStart:2600,tEnd:4200,glosses:['two','days'],confidence:0.9});
+ADD_SEGMENT({id:'p4',speaker:'patient',modality:'ASL',tStart:4300,tEnd:6200,glosses:['worse','with','exertion'],confidence:0.88});
+
+ADD_ENTITIES([
+  {id:'e1',type:'symptom',text:'chest pain',sourceSegmentId:'p1'},
+  {id:'e2',type:'body_site',text:'left side',sourceSegmentId:'p2'},
+  {id:'e3',type:'duration',text:'two days',sourceSegmentId:'p3'},
+  {id:'e4',type:'severity',text:'worse with exertion',sourceSegmentId:'p4'},
+]);
+
+// Now click “Insert from Entities → HPI” in the UI
