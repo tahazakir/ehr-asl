@@ -1,10 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
-
-
-base: 'ehr-asl'
+  base: '/ehr-asl/',            // <-- repo name between slashes
+  build: { outDir: 'docs' },    // <-- build into /docs for GitHub Pages
+});
