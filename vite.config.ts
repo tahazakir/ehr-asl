@@ -7,4 +7,4 @@ export default defineConfig({
 })
 
 
-base: '/YOUR_REPO_NAME/'
+base: 'ehr-asl'
