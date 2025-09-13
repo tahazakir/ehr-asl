@@ -1,0 +1,9 @@
+{
+  "demographics": { "age": 62, "sex": "M" },
+  "smoking_history": { "status": "former", "pack_years": 35, "quit_years": 5 },
+  "chronic_conditions": ["COPD", "hypertension"],
+  "medications": ["lisinopril"],
+  "allergies": ["penicillin"],
+  "recent_history": { "fever": false, "night_sweats": true, "weight_loss": true, "tb_exposure": false },
+  "social": { "travel_recent": false, "occupational_dust": true }
+}

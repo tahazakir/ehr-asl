@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <div style={{ padding: 16, fontFamily: 'system-ui' }}>
-      <h1>EHR-ASL Demo (Simple)</h1>
+      <h1>Vital Signs (Demo)</h1>
       <VisitControls />
       <DoctorASR />
       <GestureASL />
