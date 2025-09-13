@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import type { Segment, Entity, Note, VisitState } from '../types/core';
+import type { Segment, Entity, VisitState, HealthRecord } from '../types/core';
 
 type AppState = {
   visit: VisitState;
   segments: Segment[];
   entities: Entity[];
-  note: Note;
+  healthRecord: HealthRecord;
 
   startVisit: () => void;
   stopVisit: () => void;
@@ -14,65 +14,49 @@ type AppState = {
   addSegment: (seg: Segment) => void;
   addEntities: (list: Entity[]) => void;
 
-  setNote: (note: Note) => void;
-  addNoteSource: (src: { segmentId: string; entityId?: string }) => void;
-};
-
-const emptyNote: Note = {
-  sections: { HPI: '', ROS: '', PE: '', Plan: '' },
-  sources: [],
+  setHealthRecord: (text: string) => void;
+  appendHealthRecord: (text: string) => void;
 };
 
 export const useAppStore = create<AppState>((set, get) => ({
   visit: { status: 'idle' },
   segments: [],
   entities: [],
-  note: emptyNote,
+  healthRecord: '',
 
   startVisit: () =>
     set(() => ({
       visit: { status: 'recording', startedAt: Date.now() },
       segments: [],
       entities: [],
-      note: emptyNote,
+      healthRecord: '',
     })),
 
-  stopVisit: () =>
-    set((state) => ({
-      visit: { ...state.visit, status: 'review' },
-    })),
+  stopVisit: () => set((s) => ({ visit: { ...s.visit, status: 'review' } })),
 
   resetVisit: () =>
     set(() => ({
       visit: { status: 'idle' },
       segments: [],
       entities: [],
-      note: emptyNote,
+      healthRecord: '',
     })),
 
   addSegment: (seg) =>
-    set((state) => {
-      if (state.segments.some((s) => s.id === seg.id)) return state; // dedupe by id
-      const segments = [...state.segments, seg].sort(
-        (a, b) => a.tStart - b.tStart
-      );
-      return { ...state, segments };
+    set((s) => {
+      if (s.segments.some((x) => x.id === seg.id)) return s;
+      const segments = [...s.segments, seg].sort((a, b) => a.tStart - b.tStart);
+      return { ...s, segments };
     }),
 
   addEntities: (list) =>
-    set((state) => {
-      const existing = new Set(state.entities.map((e) => e.id));
-      const merged = [
-        ...state.entities,
-        ...list.filter((e) => !existing.has(e.id)),
-      ];
-      return { ...state, entities: merged };
+    set((s) => {
+      const seen = new Set(s.entities.map((e) => e.id));
+      const merged = [...s.entities, ...list.filter((e) => !seen.has(e.id))];
+      return { ...s, entities: merged };
     }),
 
-  setNote: (note) => set(() => ({ note })),
-
-  addNoteSource: (src) =>
-    set((state) => ({
-      note: { ...state.note, sources: [...state.note.sources, src] },
-    })),
+  setHealthRecord: (text) => set(() => ({ healthRecord: text })),
+  appendHealthRecord: (text) =>
+    set((s) => ({ healthRecord: (s.healthRecord ? s.healthRecord + '\n' : '') + text })),
 }));
