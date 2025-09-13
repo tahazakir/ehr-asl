@@ -1,4 +1,4 @@
-# Vital Signs (Demo)
+# 🩺 Vital Signs (Demo)
 
 Assist a clinician during triage using **one-hand gestures** (MediaPipe), **speech-to-text** for the clinician, and an **LLM-generated follow-up question** based on a short patient history.
 
