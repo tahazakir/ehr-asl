@@ -411,10 +411,6 @@ export default function GestureASL() {
                 <canvas ref={canvasRef} width={640} height={480} style={canvasStyle} />
             </div>
 
-            <small style={{ opacity: 0.7 }}>
-                Hold a clear Thumb_Up/Thumb_Down ~0.5–0.8s to emit “chest pain”. Point your index fingertip to the nose for ~0.3s to emit “allergy”.
-            </small>
-
             {(fupLoading || fup || fupError) && (
                 <div style={{ marginTop: 8, padding: 8, border: '1px solid #333', borderRadius: 8 }}>
                     <strong>Suggested follow-up</strong>
