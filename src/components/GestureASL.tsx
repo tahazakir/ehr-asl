@@ -412,9 +412,6 @@ export default function GestureASL() {
           <video ref={videoRef} playsInline muted style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
           <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
         </div>
-        <figcaption className="secondary">
-          Hold a clear Thumb_Up/Thumb_Down ~0.5–0.8s to emit “severe”. Point to the nose ~0.3s to emit “allergy”.
-        </figcaption>
       </figure>
 
       {(fupLoading || fup || fupError) && (
