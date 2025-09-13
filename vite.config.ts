@@ -1,10 +1,10 @@
-// vite.config.ts
+/// <reference types="node" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const isPages = process.env.GITHUB_PAGES === 'true';
+
 export default defineConfig({
   plugins: [react()],
-  // base is '/' locally/Vercel, repo subpath on GitHub Pages
-  base: process.env.GITHUB_PAGES ? '/ehr-asl/' : '/',
-  // DO NOT set build.outDir here (Vite default is 'dist')
+  base: isPages ? '/ehr-asl/' : '/',  // Pages vs Vercel/local
 });
