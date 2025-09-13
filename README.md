@@ -1,69 +1,58 @@
-# React + TypeScript + Vite
+# 🩺 Vital Signs (Demo)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Assist a clinician during triage using **one-hand gestures** (MediaPipe), **speech-to-text** for the clinician, and an **LLM-generated follow-up question** based on a short patient history.
 
-Currently, two official plugins are available:
+**Live demo:** https://ehr-asl-woad.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
+- **Patient gestures (webcam)** via MediaPipe Tasks Vision  
+  - Built-in hand gestures (e.g., `Closed_Fist → "cough"`), stability gating.  
+  - Fused **index-finger → nose** rule (hand + face detector) → `"allergy"`.
+- **Clinician ASR (mic)** via Web Speech API (Chrome).
+- **Follow-up suggestion** via a small Vercel serverless proxy hitting an LLM.
+- **Health Record** free-text panel + **Append from Entities**.
+- **Export JSON** (notes + segments + entities).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech
+- Vite + React + TypeScript  
+- `@mediapipe/tasks-vision`  
+- Web Speech API (Chrome)  
+- Pico.css (tiny CSS framework)  
+- Vercel Functions (proxy for LLM) / GitHub Pages (static)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Quick start (local)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Requirements:** Node 18+, Chromium browser. Use HTTPS/localhost for cam/mic.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+~~~bash
+git clone <your-fork-or-repo>
+cd ehr-asl
+npm i
+npm run dev
+~~~
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Open http://localhost:5173 and allow **camera** + **microphone**.
+
+## How to use
+1. Click **Start** (visit controls).
+2. **Doctor ASR** → **Enable Mic**.
+3. **Gestures** → **Start Gesture Capture**.  
+4. When a **symptom** is emitted, a **follow-up question** appears.
+5. Use **Health Record**; optionally **Append from Entities**.
+6. **Download JSON** at the bottom.
+
+---
+
+## Safety
+This demo is **not a medical device**. Keep an interpreter/clinician involved. Don’t send PHI to third parties without proper consent.
+
+---
+
+## License
+MIT
