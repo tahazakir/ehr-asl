@@ -15,7 +15,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: 'npm' }
       - run: npm ci
-      - run: npm run build
+      # Set env so Vite uses the Pages base
+      - run: GITHUB_PAGES=true npm run build
       - run: cp -f dist/index.html dist/404.html && touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with: { path: 'dist' }
