@@ -7,6 +7,8 @@ import CaptionsPane from './components/CaptionsPane';
 import NoteEditor from './components/NoteEditor';
 import ExportBar from './components/ExportBar';
 import DoctorASR from './components/DoctorASR';
+import GestureASL from './components/GestureASL';
+
 
 export default function App() {
   const addSegment = useAppStore((s) => s.addSegment);
@@ -26,6 +28,7 @@ export default function App() {
       <h1>EHR-ASL Demo</h1>
       <VisitControls />
       <DoctorASR />
+      <GestureASL />
       <CaptionsPane/>
       <NoteEditor />
       <ExportBar />
